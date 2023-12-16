@@ -1,0 +1,8 @@
+<h2>File List</h2>
+<ul>
+    {% for file in files %}
+        <li><a href="{% url 'download_file' file.id %}">{{ file.name }}</a></li>
+    {% endfor %}
+</ul>
+
+<p><a href="{% url 'generate_api_key' %}">Generate API Key</a></p>
