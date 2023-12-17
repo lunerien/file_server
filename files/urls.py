@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import file_list, upload_file, download_file, generate_api_key, FileList, FileDetail
+from .views import file_list, upload_file, download_file, generate_api_key, FileList, FileDetail, user_login, \
+    user_logout, register
 
 urlpatterns = [
     path('list/', file_list, name='file_list'),
@@ -8,5 +9,7 @@ urlpatterns = [
     path('generate-api-key/', generate_api_key, name='generate_api_key'),
     path('api/files/', FileList.as_view(), name='file-list'),
     path('api/files/<int:pk>/', FileDetail.as_view(), name='file-detail'),
-
+    path('login/', user_login, name='user_login'),
+    path('logout/', user_logout, name='user_logout'),
+    path('register/', register, name='register'),
 ]

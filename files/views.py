@@ -12,6 +12,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics, permissions
 from .models import CustomUser
 from .serializers import FileSerializer, CustomUserSerializer
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.forms import AuthenticationForm
+from .forms import CustomUserCreationForm
 
 
 def file_list(request):
@@ -57,3 +61,32 @@ class FileDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = File.objects.all()
     serializer_class = FileSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+
+def user_login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('file_list')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'registration/login.html', {'form': form})
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('file_list')
+
+
+def register(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('file_list')
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'registration/register.html', {'form': form})
