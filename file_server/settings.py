@@ -143,7 +143,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = 'files.CustomUser'
 LOGIN_URL = 'user_login'
-LOGOUT_URL = 'logout
+LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'file_list'
 
 
